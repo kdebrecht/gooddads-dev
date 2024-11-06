@@ -99,5 +99,5 @@ export default {
     	}
     },
 
-    plugins: [forms, tailwindAnimate],
+    plugins: [forms],
 };
