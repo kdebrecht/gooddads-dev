@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property string $id
@@ -98,4 +99,15 @@ class Participant extends Model
     {
         return $this->hasMany(Child::class);
     }
+
+    /**
+     * Define the relationship to the ParticipantIntakeCode model.
+     *
+     * @return HasOne<ParticipantIntakeCode>
+     */
+    public function intakeCode(): HasOne
+    {
+        return $this->hasOne(ParticipantIntakeCode::class);
+    }
+
 }
