@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Intake;
 
-use App\Http\Controllers\Controller;
 use App\Http\Requests\Intake\SignupStoreRequest;
 use App\Http\Requests\Intake\SignupUpdateRequest;
 use App\Http\Resources\Intake\SignupFormResource;
 use App\Models\ParticipantSignupForm;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -22,11 +23,10 @@ class SignupController extends IntakeFormController
     public function create(Request $request): Response
     {
         return Inertia::render('Intake/Signup/Index', [
-            ...$this->currentParticipant(),
+            ...$this->currentParticipantWithCode(),
             'form' => SignupFormResource::make(new ParticipantSignupForm()),
         ]);
     }
-
 
     public function store(SignupStoreRequest $request): RedirectResponse
     {
@@ -34,23 +34,33 @@ class SignupController extends IntakeFormController
 
         $signupForm = ParticipantSignupForm::create($validated);
 
-        // todo, are we automatically redirecting to the next form?
-        return redirect()->route('intake.signup.');
+        return Redirect::route('intake.signup.show', $signupForm);
     }
 
-    public function edit(Request $request, ParticipantSignupForm $signupForm): Response
+    public function show(Request $request, ParticipantSignupForm $signup): Response
+    {
+        return Inertia::render('Intake/Signup/Show', [
+            ...$this->currentParticipantWithCode(),
+            'form' => SignupFormResource::make($signup),
+        ]);
+    }
+
+    public function edit(Request $request, ParticipantSignupForm $signup): Response
     {
         return Inertia::render('Intake/Signup/Edit', [
-            ...$this->currentParticipant(),
-            'form' => SignupFormResource::make($signupForm),
+            ...$this->currentParticipantWithCode(),
+            'form' => SignupFormResource::make($signup),
         ]);
     }
 
-    public function update(SignupUpdateRequest $request): Response
+    public function update(SignupUpdateRequest $request, ParticipantSignupForm $signup): RedirectResponse
     {
-        return Inertia::render('Intake/Signup', [
-            ...$this->currentParticipant(),
-        ]);
+        $validated = $request->validated();
+        unset($validated['participant_id']);
+
+        $signup->update($validated);
+
+        return Redirect::route('intake.signup.show', $signup);
     }
 
     public function destroy(Request $request): RedirectResponse

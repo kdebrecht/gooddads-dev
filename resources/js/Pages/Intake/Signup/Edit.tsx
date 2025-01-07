@@ -6,7 +6,8 @@ interface SignupIndexPageProps extends IntakePageProps {
     form: IntakeSignupForm,
 }
 
-export default function SignupEditPage({ participant, participantCode }: SignupIndexPageProps) {
+export default function SignupEditPage({ participant, participantCode, form: defaultFormValues }: SignupIndexPageProps) {
 
-    return <div />
+
+    return <div >Signup index (Edit) page</div>
 }

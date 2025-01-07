@@ -25,16 +25,16 @@ class SignupUpdateRequest extends FormRequest
     {
         return [
             'participant_id' => ['required', 'uuid',  Rule::exists('participants', 'id')],
-            'client_name' => ['required', 'string', 'max191'],
+            'client_name' => ['required', 'string', 'max:191'],
             'date' => ['required', 'date'],
-            'address' => ['required', 'string', 'max191'],
-            'employer' => ['nullable', 'string', 'max191'],
-            't_shirt_size' => ['nullable', 'string', 'max191'],
+            'address' => ['required', 'string', 'max:191'],
+            'employer' => ['nullable', 'string', 'max:191'],
+            't_shirt_size' => ['nullable', 'string', 'max:191'],
             'home_cell_phone' => ['required', 'string', 'max:20', new UsPhoneNumber()],
             'work_phone' => ['nullable', 'string', 'max:20', new UsPhoneNumber()],
             'other_number' => ['nullable', 'string', 'max:20', new UsPhoneNumber()],
-            'email_address' => ['nullable', 'email', 'max191'],
-            'probation_parole_case_worker_name' => ['nullable', 'string', 'max191'],
+            'email_address' => ['nullable', 'email', 'max:191'],
+            'probation_parole_case_worker_name' => ['nullable', 'string', 'max:191'],
             'probation_parole_case_worker_phone' => ['nullable', 'string', 'max:20', new UsPhoneNumber()],
             // Children information
             'children_info' => ['nullable', 'array'],

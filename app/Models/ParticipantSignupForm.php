@@ -11,10 +11,11 @@ class ParticipantSignupForm extends Model
 
     protected $table = 'participant_sign_up_form';
 
-    protected $guarded = ['id', 'participant_id'];
+    protected $guarded = ['id'];
 
     protected $casts = [
         'children_info' => 'array',
+        'date' => 'date',
     ];
 
 }

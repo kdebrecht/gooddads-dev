@@ -39,6 +39,8 @@ Route::name('intake.')
                 Route::get('/', 'show')->name('show');
                 Route::post('/', 'store')->name('generate');
                 Route::delete('/', 'destroy')->name('destroy');
+                Route::get('/create', 'store')->name('generate-temp');
+                Route::get('/delete', 'destroy')->name('destroy-temp');
             });
 
         Route::withoutMiddleware(IntakeUserIdentifierMiddleware::class)
@@ -47,8 +49,8 @@ Route::name('intake.')
                 Route::post('/', 'store')->name('start');
             });
 
-        Route::resource('signup', SignupController::class)
-            ->only(['index', 'store', 'show', 'edit', 'update']);
+        Route::resource('signup', SignupController::class);
+
     });
 
 require __DIR__.'/auth.php';
